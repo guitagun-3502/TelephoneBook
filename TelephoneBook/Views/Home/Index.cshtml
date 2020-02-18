@@ -1,0 +1,93 @@
+﻿@model TelephoneBook.Models.UserListViewModel
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" />
+    <title>Телефонная книга</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="m-5">
+        <h1 class="mb-5 text-center">Список телефонных пользователей</h1>
+        <div class="row m-2">
+            <a href="/Home/AddUser" class="btn btn-info m-2">Добавить пользователя</a>
+            <form method="get">
+                <div class="form-inline m-2">
+                    <label class="control-label mr-1">Структурное подразделение: </label>
+                    @Html.DropDownList("StructuralSubdivision", Model.StructuralSubdivisions as SelectList,
+                                htmlAttributes: new { @class = "form-control" })
+                    <label class="control-label mr-1">Введите фамилию: </label>
+                    @Html.EditorFor(model => Model.SearchString)
+                    <input type="submit" value="Фильтр" class="btn btn-info ml-2" />
+                </div>
+            </form>
+        </div>
+        <table class="table table-striped table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">Должность</th>
+                    <th scope="col">Структурное подразделение</th>
+                    <th scope="col">Служебный номер</th>
+                    <th scope="col">Личный номер</th>
+                    <th scope="col">Служебный мобильный номер</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td><p>@Html.DisplayFor(modelItem => user.LastName)</p></td>
+                        <td><p>@Html.DisplayFor(modelItem => user.FirstName)</p></td>
+                        <td><p>@Html.DisplayFor(modelItem => user.MiddleName)</p></td>
+                        <td><p>@Html.DisplayFor(modelItem => user.Position)</p></td>
+                        <td><p>@Html.DisplayFor(modelItem => user.StructuralSubdivision)</p></td>
+                        <td>
+                            @foreach (var telephone in user.Telephones)
+                            {
+                                if (telephone.TelephoneType == "ServiceNumber")
+                                {
+                                    <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @foreach (var telephone in user.Telephones)
+                            {
+                                if (telephone.TelephoneType == "PersonalNumber")
+                                {
+                                    <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @foreach (var telephone in user.Telephones)
+                            {
+                                if (telephone.TelephoneType == "ServicePersonalNumber")
+                                {
+                                    <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a href="/Home/Detail/@user.Id" class="btn btn-success m-3">Просмотр</a>
+                            <a href="/Home/Edit/@user.Id" class="btn btn-success m-3">Изменить</a>
+                            <a href="/Home/Delete/@user.Id" class="btn btn-danger m-3">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

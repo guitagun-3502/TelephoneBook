@@ -1,0 +1,80 @@
+﻿@model TelephoneBook.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добавить пользователя</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="container">
+        <h2>Форма добавления нового пользователя</h2>
+        <form method="post" action="">
+            <input type="hidden" value="@ViewBag.UserId" name="UserId" />
+            <div class="form-group editor-field">
+                <label>Фамилия:</label>
+                <input class="form-control" type="text" name="LastName" />
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="form-group editor-field">
+                <label>Имя:</label>
+                <input class="form-control" type="text" name="FirstName" />
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="form-group editor-field">
+                <label>Отчество:</label>
+                <input class="form-control" type="text" name="MiddleName" />
+                @Html.ValidationMessageFor(model => model.MiddleName)
+            </div>
+            <div class="form-group editor-field">
+                <label>Должность:</label>
+                <input class="form-control" type="text" name="Position" />
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+            <div class="form-group">
+                <label>Структурное подразделение:</label>
+                <select class="form-control" name="StructuralSubdivision">
+                    <option disabled>Выберете из списка</option>
+                    <option value="Финансовый отдел">Финансовый отдел</option>
+                    <option value="Юридический отдел">Юридический отдел</option>
+                    <option value="Отдел разработки">Отдел разработки</option>
+                    <option value="Отдел безопасности">Отдел безоасности</option>
+                </select>
+            </div>
+            <div class="form-group" id="serviceNumber">
+                <label>Служебный номер:</label>
+                <div class="row">
+                    <input class="form-control" type="text" name="Telephones[0].TelephoneNumber" />
+                    <input hidden type="text" name="Telephones[0].TelephoneType" value="ServiceNumber" />
+                    <label class="btn btn-info ml-2" onclick="addServiceNumber()">+</label>
+                </div>
+            </div>
+            <div class="form-group" id="personalNumber">
+                <label>Личный номер:</label>
+                <div class="row">
+                    <input class="form-control" type="text" name="Telephones[1].TelephoneNumber" />
+                    <input hidden type="text" name="Telephones[1].TelephoneType" value="PersonalNumber" />
+                    <label class="btn btn-info ml-2" onclick="addPersonalNumber()">+</label>
+                </div>
+            </div>
+            <div class="form-group" id="servicePersonalNumber">
+                <label>Служебный мобильный номер:</label>
+                <div class="row">
+                    <input class="form-control" type="text" name="Telephones[2].TelephoneNumber" />
+                    <input hidden type="text" name="Telephones[2].TelephoneType" value="ServicePersonalNumber" />
+                    <label class="btn btn-info ml-2" onclick="addServicePersonalNumber()">+</label>
+                </div>
+            </div>
+            <input type="submit" value="Отправить" />
+        </form>
+    </div>
+    <script src="~/Scripts/script.js"></script>
+</body>
+</html>
+

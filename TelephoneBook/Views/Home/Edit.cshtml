@@ -1,0 +1,88 @@
+﻿@model TelephoneBook.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Информация о @Model.LastName</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="container">
+        <h2>Информация о пользователе</h2>
+        <form method="post" action="">
+            <div class="form-group d-flex align-items-center editor-field">
+                <h5>Фамилия: </h5>
+                <h5>@Html.EditorFor(model => model.LastName)</h5>
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="form-group d-flex align-items-center editor-field">
+                <h5>Имя: </h5>
+                <h5>@Html.EditorFor(model => model.FirstName)</h5>
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="form-group d-flex align-items-center editor-field">
+                <h5>Отчество: </h5>
+                <h5>@Html.EditorFor(model => model.MiddleName)</h5>
+                @Html.ValidationMessageFor(model => model.MiddleName)
+            </div>
+            <div class="form-group d-flex align-items-center editor-field">
+                <h5>Должность: </h5>
+                <h5>@Html.EditorFor(model => model.Position)</h5>
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <h5>Структурное подразделение:</h5>
+                <h5>@Html.EditorFor(model => model.StructuralSubdivision)</h5>
+            </div>
+            <div class="form-group">
+                <h5>Служебный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "ServiceNumber")
+                        {
+                            @Html.EditorFor(modelItem => telephone.TelephoneNumber)
+                            @Html.ValidationMessageFor(modelItem => telephone.TelephoneNumber)
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Личный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "PersonalNumber")
+                        {
+                            @Html.EditorFor(modelItem => telephone.TelephoneNumber)
+                            @Html.ValidationMessageFor(modelItem => telephone.TelephoneNumber)
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Служебный мобильный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "ServicePersonalNumber")
+                        {
+                            @Html.EditorFor(modelItem => telephone.TelephoneNumber)
+                            @Html.ValidationMessageFor(modelItem => telephone.TelephoneNumber)
+                        }
+                    }
+                </div>
+            </div>
+            <input type="submit" value="Применить изменения" />
+        </form>
+    </div>
+    <script src="~/Scripts/script.js"></script>
+</body>
+</html>
+

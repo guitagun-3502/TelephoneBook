@@ -1,0 +1,81 @@
+﻿@model TelephoneBook.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Информация о @Model.LastName</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="container">
+        <h2>Информация о пользователе</h2>
+        <form method="post" action="">
+            <div class="form-group d-flex align-items-center">
+                <h5>Фамилия: </h5>
+                <h5>@Html.DisplayFor(model => model.LastName)</h5>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <h5>Имя: </h5>
+                <h5>@Html.DisplayFor(model => model.FirstName)</h5>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <h5>Отчество: </h5>
+                <h5>@Html.DisplayFor(model => model.MiddleName)</h5>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <h5>Должность: </h5>
+                <h5>@Html.DisplayFor(model => model.Position)</h5>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <h5>Структурное подразделение:</h5>
+                <h5>@Html.DisplayFor(model => model.StructuralSubdivision)</h5>
+            </div>
+            <div class="form-group">
+                <h5>Служебный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "ServiceNumber")
+                        {
+                            <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Личный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "PersonalNumber")
+                        {
+                            <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Служебный мобильный номер:</h5>
+                <div>
+                    @foreach (var telephone in Model.Telephones)
+                    {
+                        if (telephone.TelephoneType == "ServicePersonalNumber")
+                        {
+                            <p>@Html.DisplayFor(modelItem => telephone.TelephoneNumber)</p>
+                        }
+                    }
+                </div>
+            </div>
+            <input type="submit" value="На главную" />
+        </form>
+    </div>
+    <script src="~/Scripts/script.js"></script>
+</body>
+</html>
+
